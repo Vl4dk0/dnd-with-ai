@@ -4,7 +4,10 @@ import type { GameState, WebSocketEvent, ChatMessage, Player } from '../types';
 
 type GameAction =
   | { type: 'SET_STATUS'; payload: 'connecting' | 'connected' | 'disconnected' }
-  | { type: 'SET_GAME_STATE'; payload: { players: Player[]; messages: ChatMessage[] } }
+  | {
+      type: 'SET_GAME_STATE';
+      payload: { players: Player[]; messages: ChatMessage[] };
+    }
   | { type: 'ADD_PLAYER'; payload: Player }
   | { type: 'REMOVE_PLAYER'; payload: Player }
   | { type: 'ADD_MESSAGE'; payload: ChatMessage };
@@ -17,12 +20,17 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
       return { ...state, ...action.payload };
     case 'ADD_PLAYER':
       // Avoid adding duplicate players
-      if (state.players.find(p => p.player_id === action.payload.player_id)) {
+      if (state.players.find((p) => p.player_id === action.payload.player_id)) {
         return state;
       }
       return { ...state, players: [...state.players, action.payload] };
     case 'REMOVE_PLAYER':
-      return { ...state, players: state.players.filter(p => p.player_id !== action.payload.player_id) };
+      return {
+        ...state,
+        players: state.players.filter(
+          (p) => p.player_id !== action.payload.player_id
+        ),
+      };
     case 'ADD_MESSAGE':
       return { ...state, messages: [...state.messages, action.payload] };
     default:
@@ -30,7 +38,11 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
   }
 };
 
-const useGameSocket = (gameId: string, playerId: string, playerName: string) => {
+const useGameSocket = (
+  gameId: string,
+  playerId: string,
+  playerName: string
+) => {
   const [gameState, dispatch] = useReducer(gameReducer, {
     status: 'connecting',
     players: [],
@@ -40,11 +52,15 @@ const useGameSocket = (gameId: string, playerId: string, playerName: string) => 
   const ws = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    ws.current = new WebSocket(`ws://localhost:8000/ws/games/${gameId}?player_id=${playerId}&player_name=${playerName}`);
+    ws.current = new WebSocket(
+      `ws://localhost:8000/ws/games/${gameId}?player_id=${playerId}&player_name=${playerName}`
+    );
     const wsCurrent = ws.current;
 
-    wsCurrent.onopen = () => dispatch({ type: 'SET_STATUS', payload: 'connected' });
-    wsCurrent.onclose = () => dispatch({ type: 'SET_STATUS', payload: 'disconnected' });
+    wsCurrent.onopen = () =>
+      dispatch({ type: 'SET_STATUS', payload: 'connected' });
+    wsCurrent.onclose = () =>
+      dispatch({ type: 'SET_STATUS', payload: 'disconnected' });
 
     wsCurrent.onmessage = (event) => {
       const message: WebSocketEvent = JSON.parse(event.data);

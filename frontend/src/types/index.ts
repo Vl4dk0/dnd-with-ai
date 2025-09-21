@@ -38,7 +38,7 @@ export interface NewMessagePayload {
 /**
  * Represents a generic WebSocket event message.
  */
-export interface WebSocketEvent<T = any> {
+export interface WebSocketEvent<T = unknown> {
   event_type: string;
   payload: T;
 }

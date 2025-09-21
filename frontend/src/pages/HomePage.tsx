@@ -9,7 +9,9 @@ const HomePage: React.FC = () => {
   const createGame = async () => {
     try {
       // This will be replaced with the actual API call
-      const response = await fetch('http://localhost:8000/games', { method: 'POST' });
+      const response = await fetch('http://localhost:8000/games', {
+        method: 'POST',
+      });
       const data = await response.json();
       navigate(`/game/${data.game_id}`);
     } catch (error) {

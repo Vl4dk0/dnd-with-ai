@@ -12,10 +12,18 @@ const GameRoom: React.FC = () => {
   const playerId = `player_${Date.now()}`;
   const playerName = `Player ${Math.floor(Math.random() * 1000)}`;
 
-  const { gameState, sendMessage } = useGameSocket(gameId!, playerId, playerName);
+  const { gameState, sendMessage } = useGameSocket(
+    gameId!,
+    playerId,
+    playerName
+  );
 
   if (gameState.status !== 'connected') {
-    return <div className="flex items-center justify-center min-h-screen">{gameState.status}...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        {gameState.status}...
+      </div>
+    );
   }
 
   return (
