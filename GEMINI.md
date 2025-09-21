@@ -14,7 +14,7 @@ This is not a suggestion; it is the core requirement for any contribution. Your 
     * **Frontend**: Build a library of reusable, well-defined components and hooks.
 * **Code Quality & Documentation**: Your work must be clear, documented, and easy for others to understand.
     * **Docstrings & Comments**: All functions, classes, and complex logic blocks must be documented with clear, concise docstrings (e.g., Google-style for Python).
-    * **Coding Guidelines**: Adhere to standard industry style guides. Use formatters and linters (e.g., `black` and `ruff` for Python; `Prettier` and `ESLint` for TypeScript/React).
+    * **Coding Guidelines**: Adhere to standard industry style guides. Use formatters and linters (`yapf` for Python; `prettier` for TypeScript/React).
     * **Commit Hygiene**: Write clear, descriptive Git commit messages that explain the "what" and "why" of your changes. Use Github's mcp to commit changes.
     * **Testing**: Write comprehensive unit and integration tests. Aim for high code coverage and ensure all tests pass before merging.
 * **Process Documentation**: Maintain a simple `DEVELOPER_LOG.md` file in the root of your feature branch. In it, briefly log your key decisions, the files you created or modified, and any challenges you encountered. This creates a transparent record of your work.
